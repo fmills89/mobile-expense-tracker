@@ -1,20 +1,9 @@
-import {
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 
 function ManageExpense() {
-  return (
-    <Text>
-      AllExpenses
-      screen
-    </Text>
-  );
+  return <Text>AllExpenses screen</Text>;
 }
 
 export default ManageExpense;
 
-const styles =
-  StyleSheet.create(
-    {}
-  );
+const styles = StyleSheet.create({});

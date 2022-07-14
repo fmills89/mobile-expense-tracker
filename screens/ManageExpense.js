@@ -29,6 +29,19 @@ function ManageExpense({ route, navigation }) {
   }
 
   function confirmHandler() {
+    if (isEditing) {
+      expensesCtx.updateExpense(editedExpenseId, {
+        description: 'Test!!!',
+        amount: 29.19,
+        date: new Date('2022-07-14'),
+      });
+    } else {
+      expensesCtx.addExpense({
+        description: 'Test',
+        amount: 19.19,
+        date: new Date('2022-07-09'),
+      });
+    }
     navigation.goBack();
   }
 

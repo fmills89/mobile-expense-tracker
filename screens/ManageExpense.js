@@ -1,10 +1,13 @@
 import { View, StyleSheet } from 'react-native';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useContext } from 'react';
 import IconButton from '../components/UI/IconButton';
 import { GlobalStyles } from '../constants/styles';
 import Button from '../components/UI/Buttons';
+import { ExpensesContext } from '../store/expenses-context';
 
 function ManageExpense({ route, navigation }) {
+  const expensesCtx = useContext(ExpensesContext);
+
   const editedExpenseId = route.params?.expenseId;
   // converting val into boolean !!
   const isEditing = !!editedExpenseId;
@@ -17,6 +20,7 @@ function ManageExpense({ route, navigation }) {
 
   function deleteExpenseHandler() {
     // built in method to close modal
+    expensesCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
 

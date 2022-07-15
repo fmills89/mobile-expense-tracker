@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Input from './Input';
 
-function ExpenseForm() {
+import Button from '../UI/Buttons';
+
+function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
   const [inputValues, setInputValues] = useState({
     amount: '',
     date: '',
@@ -16,6 +18,16 @@ function ExpenseForm() {
         [inputIdentifier]: enteredValue,
       };
     });
+  }
+
+  function submitHandler() {
+    const expenseData = {
+      amount: +inputValues.amount,
+      date: new Date(inputValues.date),
+      description: inputValues.description,
+    };
+
+    onSubmit(expenseData);
   }
 
   return (
@@ -37,7 +49,7 @@ function ExpenseForm() {
           textInputConfig={{
             placeholder: 'YYYY-MM-DD',
             maxLength: 10,
-            onChangeText: inputChangedHandler.bind(this, 'amount'),
+            onChangeText: inputChangedHandler.bind(this, 'date'),
             value: inputValues.date,
           }}
         />
@@ -48,10 +60,18 @@ function ExpenseForm() {
           multiline: true,
           // autoCaptilize: 'none'
           // autoCorrect: false
-          onChangeText: inputChangedHandler.bind(this, 'amount'),
+          onChangeText: inputChangedHandler.bind(this, 'description'),
           value: inputValues.description,
         }}
       />
+      <View style={styles.buttons}>
+        <Button style={styles.button} mode="flat" onPress={onCancel}>
+          Cancel
+        </Button>
+        <Button style={styles.button} onPress={submitHandler}>
+          {submitButtonLabel}
+        </Button>
+      </View>
     </View>
   );
 }
@@ -75,5 +95,14 @@ const styles = StyleSheet.create({
     color: 'white',
     marginVertical: 24,
     textAlign: 'center',
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -21,7 +21,7 @@ export async function fetchExpenses() {
       id: key,
       // syntax dynamic access a properties which name is stored in key constant
       amount: response.data[key].amount,
-      date: response.date[key].date,
+      date: new Date(response.data[key].date),
       description: response.data[key].description,
     };
     expenses.push(expenseObj);

@@ -1,11 +1,22 @@
 import { Text, StyleSheet } from 'react-native';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import ExpensesOutput from '../components/ExpensesOutput/ExpensesOutput';
 import { ExpensesContext } from '../store/expenses-context';
 import { getDateMinusDays } from '../utils/date';
+import { fetchExpenses } from '../utils/http';
 
 function RecentExpenses() {
   const expensesCtx = useContext(ExpensesContext);
+
+  useEffect(() => {
+    // helper function instead of turning useeffect into a async func
+    // should not do that - discouraged
+    // work around instead of creating useEffect into async
+    async function getExpenses() {
+      const expenses = await fetchExpenses();
+    }
+    getExpenses();
+  }, []);
 
   const recentExpenses = expensesCtx.expenses.filter(expense => {
     const today = new Date();

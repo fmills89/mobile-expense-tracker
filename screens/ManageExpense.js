@@ -50,15 +50,16 @@ function ManageExpense({ route, navigation }) {
         onCancel={cancelHandler}
         defaultValues={selectedExpense}
       />
-
-      <View style={styles.deleteContainer}>
-        <IconButton
-          icon="trash"
-          size={36}
-          color={GlobalStyles.colors.error500}
-          onPress={deleteExpenseHandler}
-        />
-      </View>
+      {isEditing && (
+        <View style={styles.deleteContainer}>
+          <IconButton
+            icon="trash"
+            size={36}
+            color={GlobalStyles.colors.error500}
+            onPress={deleteExpenseHandler}
+          />
+        </View>
+      )}
     </View>
   );
 }

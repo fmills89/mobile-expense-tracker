@@ -1,5 +1,5 @@
 import { Text, StyleSheet } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import ExpensesOutput from '../components/ExpensesOutput/ExpensesOutput';
 import { ExpensesContext } from '../store/expenses-context';
 import { getDateMinusDays } from '../utils/date';
@@ -7,8 +7,6 @@ import { fetchExpenses } from '../utils/http';
 
 function RecentExpenses() {
   const expensesCtx = useContext(ExpensesContext);
-  // manage some state
-  const [fetchedExpenses, setFetchedExpenses] = useState([]);
 
   useEffect(() => {
     // helper function instead of turning useeffect into a async func
@@ -17,12 +15,12 @@ function RecentExpenses() {
     async function getExpenses() {
       const expenses = await fetchExpenses();
       // set expenses we got to useState
-      setFetchedExpenses(expenses);
+      expensesCtx.setExpenses(expenses);
     }
     getExpenses();
   }, []);
 
-  const recentExpenses = fetchedExpenses.filter(expense => {
+  const recentExpenses = expensesCtx.expenses.filter(expense => {
     const today = new Date();
     const date7DaysAgo = getDateMinusDays(today, 7);
 
